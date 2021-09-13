@@ -8,8 +8,7 @@ export default function resolveGet(app){
   })
 
   app.post('/atendimento', (req, res) => {
-    treatment.addTreatment(req.body)
-    res.send(req.body)
+    treatment.addTreatment(req.body, res)
   })
 
 }
