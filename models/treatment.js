@@ -3,7 +3,7 @@ import moment from 'moment'
 
 export class Treatment {
 
-  addTreatment(treatment, res) {
+  addTreatment(treatment, response) {
     const creationDate = moment('2021-09-13').format('YYYY-MM-DD HH:MM:SS')
     const date = moment(treatment.date, 'DD/MM/YYYY').format('YYYY-MM-DD HH:MM:SS')
     const datedTreatment = {...treatment, creationDate, date}
@@ -28,19 +28,45 @@ export class Treatment {
     const existErrors = errors.length
 
     if (existErrors) {
-      res.status(400).json(errors)
+      response.status(400).json(errors)
     }
     else{
       const sql = 'INSERT INTO Treatment SET ?'
 
       connection.query(sql, datedTreatment, (error, result) => {
         if (error) {
-          res.status(400).json(error)
+          response.status(400).json(error)
         }
         else {
-          res.status(201).json(result)
+          response.status(201).json(result)
         }
       })
     }
+  }
+
+  list(response) {
+    const sql = 'SELECT * FROM Treatment'
+
+    connection.query(sql, (error, result) => {
+      if (error) {
+        response.status(400).json(error)
+      }
+      else {
+        response.status(200).json(result)
+      }
+    })
+  }
+
+  searchForId(id, response) {
+    const sql = `SELECT * FROM Treatment WHERE id=${id}`
+
+    connection.query(sql, (error, result) => {
+      if (error) {
+        response.status(400).json(error)
+      }
+      else {
+        response.status(200).json(result[0])
+      }
+    })
   }
 }

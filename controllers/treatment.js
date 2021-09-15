@@ -3,12 +3,16 @@ const treatment = new Treatment
 
 export default function resolveGet(app){
 
-  app.get('/atendimento', (req, res) => {
-    res.send('[GET /atendimento] Service Atendimento.')
+  app.get('/atendimento', (request, response) => {
+    treatment.list(response)
   })
 
-  app.post('/atendimento', (req, res) => {
-    treatment.addTreatment(req.body, res)
+  app.get('/atendimento/:id', (request, response) => {
+    treatment.searchForId(parseInt(request.params.id), response)
+  })
+
+  app.post('/atendimento', (request, response) => {
+    treatment.addTreatment(request.body, response)
   })
 
 }
