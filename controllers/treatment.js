@@ -19,4 +19,8 @@ export default function resolveGet(app){
     treatment.addTreatment(request.body, response)
   })
 
+  app.delete('/atendimento/:id', (request, response) => {
+    treatment.delete(parseInt(request.params.id), response)
+  })
+
 }
