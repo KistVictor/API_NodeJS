@@ -69,4 +69,21 @@ export class Treatment {
       }
     })
   }
+
+  change(id, values, response) {
+    if (values.date) {
+      values.date = moment(values.date, 'DD/MM/YYYY').format('YYYY-MM-DD HH:MM:SS')
+    }
+    const sql = 'UPDATE Treatment SET ? WHERE id=?'
+    console.log(values)
+
+    connection.query(sql, [values, id], (error, result) => {
+      if (error) {
+        response.status(400).json(error)
+      }
+      else {
+        response.status(200).json(result)
+      }
+    })
+  }
 }

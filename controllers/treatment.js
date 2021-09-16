@@ -11,6 +11,10 @@ export default function resolveGet(app){
     treatment.searchForId(parseInt(request.params.id), response)
   })
 
+  app.patch('/atendimento/:id', (request, response) => {
+    treatment.change(parseInt(request.params.id), request.body, response)
+  })
+
   app.post('/atendimento', (request, response) => {
     treatment.addTreatment(request.body, response)
   })
