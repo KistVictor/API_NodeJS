@@ -1,4 +1,5 @@
-import resolveGet from './controllers/treatment.js'
+import treatment from './controllers/treatment.js'
+import pets from './controllers/pet.js'
 import customExpress from './config/customExpress.js'
 import { connection } from './infra/connection.js'
 import { Tables } from './infra/tables.js'
@@ -13,6 +14,8 @@ connection.connect((error) => {
     app.listen(3000, () => console.log("Server is Running"))
     const tables = new Tables
     tables.init(connection)
-    resolveGet(app)
+
+    treatment(app)
+    pets(app)
   }
 })

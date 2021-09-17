@@ -16,7 +16,7 @@ export default function resolveGet(app){
   })
 
   app.post('/atendimento', (request, response) => {
-    treatment.addTreatment(request.body, response)
+    treatment.add(request.body, response)
   })
 
   app.delete('/atendimento/:id', (request, response) => {

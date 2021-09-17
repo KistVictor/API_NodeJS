@@ -1,47 +1,18 @@
 import { connection } from '../infra/connection.js'
-import moment from 'moment'
 
-export class Treatment {
+export class Pet {
 
-  add(treatment, response) {
-    const creationDate = moment('2021-09-13').format('YYYY-MM-DD HH:MM:SS')
-    const date = moment(treatment.date, 'DD/MM/YYYY').format('YYYY-MM-DD HH:MM:SS')
-    const datedTreatment = {...treatment, creationDate, date}
+  add(pet, response) {
+    const sql = 'INSERT INTO Pet SET ?'
 
-    const validDate = moment(date).isSameOrAfter(creationDate)
-    const minChar = treatment.client.length >= 4
-
-    const validations = [
-      {
-        name: 'date',
-        valid: validDate,
-        message: `the creation date must be greater than today's date`
-      },
-      {
-        name: 'name',
-        valid: minChar,
-        message: 'the number of minimum characters is 4'
+    connection.query(sql, pet, (error, result) => {
+      if (error) {
+        response.status(400).json(error)
       }
-    ]
-
-    const errors = validations.filter(camp => !camp.valid)
-    const existErrors = errors.length
-
-    if (existErrors) {
-      response.status(400).json(errors)
-    }
-    else{
-      const sql = 'INSERT INTO Treatment SET ?'
-
-      connection.query(sql, datedTreatment, (error, result) => {
-        if (error) {
-          response.status(400).json(error)
-        }
-        else {
-          response.status(201).json(result)
-        }
-      })
-    }
+      else {
+        response.status(201).json(result)
+      }
+    })
   }
 
   list(response) {
