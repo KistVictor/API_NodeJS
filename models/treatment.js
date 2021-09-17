@@ -1,5 +1,6 @@
 import { connection } from '../infra/connection.js'
 import moment from 'moment'
+import axios from 'axios'
 
 export class Treatment {
 
@@ -60,12 +61,17 @@ export class Treatment {
   searchForId(id, response) {
     const sql = `SELECT * FROM Treatment WHERE id=${id}`
 
-    connection.query(sql, (error, result) => {
+    connection.query(sql, async (error, result) => {
+      const treatment = result[0]
+      const cpf = treatment.client
+
       if (error) {
         response.status(400).json(error)
       }
       else {
-        response.status(200).json(result[0])
+        const {data} = await axios.get(`http://localhost:8082/${cpf}`)
+        treatment.client = data
+        response.status(200).json(treatment)
       }
     })
   }
