@@ -1,5 +1,5 @@
 import treatment from './controllers/treatment.js'
-import pets from './controllers/pet.js'
+import pet from './controllers/pet.js'
 import customExpress from './config/customExpress.js'
 import { connection } from './infra/connection.js'
 import { Tables } from './infra/tables.js'
@@ -16,6 +16,6 @@ connection.connect((error) => {
     tables.init(connection)
 
     treatment(app)
-    pets(app)
+    pet(app)
   }
 })

@@ -1,20 +1,35 @@
 import { connection } from '../infra/connection.js'
+import uploadTratament from '../archives/upload.js'
 
 export class Pet {
 
   add(pet, response) {
     const sql = 'INSERT INTO Pet SET ?'
 
-    connection.query(sql, pet, (error, result) => {
+    uploadTratament(pet.img, pet.name, (error, newFolder) => {
+
       if (error) {
         response.status(400).json(error)
       }
+
       else {
-        response.status(201).json(result)
+        const newPet = {name: pet.name, img: newFolder}
+
+        connection.query(sql, newPet, (error, result) => {
+
+          if (error) {
+            response.status(400).json(error)
+          }
+
+          else {
+            response.status(201).json(newPet)
+          }
+        })
       }
     })
   }
 
+  /*
   list(response) {
     const sql = 'SELECT * FROM Treatment'
 
@@ -69,4 +84,5 @@ export class Pet {
       }
     })
   }
+  */
 }
