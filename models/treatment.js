@@ -1,4 +1,4 @@
-import { connection } from '../infra/connection.js'
+import { connection } from '../infra/database/connection.js'
 import moment from 'moment'
 import axios from 'axios'
 

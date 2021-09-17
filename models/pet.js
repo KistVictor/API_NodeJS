@@ -1,5 +1,5 @@
-import { connection } from '../infra/connection.js'
-import uploadTratament from '../archives/upload.js'
+import { connection } from '../infra/database/connection.js'
+import uploadTratament from '../infra/archives/upload.js'
 
 export class Pet {
 

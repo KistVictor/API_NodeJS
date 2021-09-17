@@ -1,8 +1,8 @@
 import treatment from './controllers/treatment.js'
 import pet from './controllers/pet.js'
 import customExpress from './config/customExpress.js'
-import { connection } from './infra/connection.js'
-import { Tables } from './infra/tables.js'
+import { connection } from './infra/database/connection.js'
+import { Tables } from './infra/database/tables.js'
 
 connection.connect((error) => {
   if (error) {
