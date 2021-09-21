@@ -4,7 +4,9 @@ const treatment = new Treatment
 export default function resolveGet(app){
 
   app.get('/atendimento', (request, response) => {
-    treatment.list(response)
+    treatment.list()
+      .then(results => response.json(results))
+      .catch(error => response.status(400).json(error))
   })
 
   app.get('/atendimento/:id', (request, response) => {

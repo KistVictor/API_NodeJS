@@ -41,17 +41,8 @@ export class Treatment {
     }
   }
 
-  list(response) {
-    const sql = 'SELECT * FROM Treatment'
-
-    connection.query(sql, (error, result) => {
-      if (error) {
-        response.status(400).json(error)
-      }
-      else {
-        response.status(200).json(result)
-      }
-    })
+  list() {
+    return repository.list()
   }
 
   searchForId(id, response) {

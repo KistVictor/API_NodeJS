@@ -5,4 +5,9 @@ export default class Treatment {
     const sql = 'INSERT INTO Treatment SET ?'
     return query(sql, treatment)
   }
+
+  list() {
+    const sql = 'SELECT * FROM Treatment'
+    return query(sql)
+  }
 }
