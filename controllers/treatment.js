@@ -16,7 +16,9 @@ export default function resolveGet(app){
   })
 
   app.post('/atendimento', (request, response) => {
-    treatment.add(request.body, response)
+    treatment.add(request.body)
+      .then(signedTreatment => response.status(201).json(signedTreatment))
+      .catch(error => response.status(400).json(error))
   })
 
   app.delete('/atendimento/:id', (request, response) => {

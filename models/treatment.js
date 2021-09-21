@@ -1,10 +1,12 @@
 import { connection } from '../infra/database/connection.js'
 import moment from 'moment'
 import axios from 'axios'
+import Repository from '../repositories/treatment.js'
+const repository = new Repository
 
 export class Treatment {
 
-  add(treatment, response) {
+  add(treatment) {
     const creationDate = moment('2021-09-13').format('YYYY-MM-DD HH:MM:SS')
     const date = moment(treatment.date, 'DD/MM/YYYY').format('YYYY-MM-DD HH:MM:SS')
     const datedTreatment = {...treatment, creationDate, date}
@@ -29,19 +31,13 @@ export class Treatment {
     const existErrors = errors.length
 
     if (existErrors) {
-      response.status(400).json(errors)
+      return new Promise((resolve, reject) => reject(errors))
     }
     else{
-      const sql = 'INSERT INTO Treatment SET ?'
-
-      connection.query(sql, datedTreatment, (error, result) => {
-        if (error) {
-          response.status(400).json(error)
-        }
-        else {
-          response.status(201).json(result)
-        }
-      })
+      return repository.add(datedTreatment)
+        .then((result) => {
+          return result
+        })
     }
   }
 

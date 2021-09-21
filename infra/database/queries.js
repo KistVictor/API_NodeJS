@@ -1,4 +1,4 @@
-import { connection } from "./connection";
+import { connection } from "./connection.js";
 
 export default function queryExec(query, parms = '') {
   return new Promise((resolve, reject) => {
